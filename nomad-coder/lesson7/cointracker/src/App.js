@@ -16,6 +16,12 @@ function App() {
   const onChange = (e) => {
     setUsd(e.target.value);
   };
+  const [selected, setSelected] = useState(0);
+  const onSelect = (e) => {
+    const chooseOne = e.target.selectedOptions[0];
+    setSelected(Number(chooseOne.childNodes[5].nodeValue));
+  };
+  const canPurchase = usd / selected;
 
   return (
     <>
@@ -24,12 +30,12 @@ function App() {
         <span>Current Your Coin : </span>
         <input placeholder="USD" type={"number"} onChange={onChange}></input>
         <div>
-          <span>{usd}</span>
+          <span>You can purchase {canPurchase}</span>
         </div>
         {loading ? (
           <strong>loading....</strong>
         ) : (
-          <select>
+          <select onChange={onSelect}>
             {coins.map((i, index) => (
               <option key={index}>
                 Name: {i.name}, Symbol: {i.symbol}, USD: {i.quotes.USD.price}
