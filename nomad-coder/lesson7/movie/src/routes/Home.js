@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Home() {
   const [loading, setLoading] = useState(true);
@@ -16,17 +17,19 @@ function Home() {
   useEffect(() => {
     getMovie();
   }, []);
-
+  console.log(movies);
   return (
     <div>
       {loading ? (
         <h1>Loading.....</h1>
       ) : (
         movies.map((movie) => (
-          <div>
+          <div key={movie.id}>
             <img src={movie.medium_cover_image} alt={movie.id} />
-            <p>{movie.title}</p>
-            <p>Summary : {movie.summary}</p>
+            <p>
+              <Link to={movie.url}>{movie.title}</Link>
+            </p>
+            <p>Genres : {movie.genres[0]}</p>
           </div>
         ))
       )}
